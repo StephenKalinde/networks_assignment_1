@@ -27,6 +27,7 @@ public class Server {
     // an ArrayList to keep the list of the Client
 
     private ArrayList<ClientThread> al;
+    private ArrayList<File> allFiles;
     // if I am in a GUI
     private ServerGUI sg;
 
@@ -60,6 +61,7 @@ public class Server {
         sdf = new SimpleDateFormat("HH:mm:ss");
         // ArrayList for the Client list
         al = new ArrayList<ClientThread>();
+        allFiles = new ArrayList<File>();
     }
 
     public void start() {
@@ -226,6 +228,9 @@ public class Server {
         String username;
        // the only type of message a will receive
         ChatMessage cm;
+
+        //file from message
+        File filemsg;
         // the date I connect
         String date;
         // Constructore
@@ -263,6 +268,7 @@ public class Server {
                 // read a String (which is an object)
                 try {
                     cm = (ChatMessage) socketInput.readObject();
+                   // filemsg = (File) socketInput.readObject();
                 }
                 catch (IOException e) {
                     display(username + " Exception reading Streams: " + e);
@@ -273,6 +279,7 @@ public class Server {
                 }
                 // the messaage part of the ChatMessage
                 String message = cm.getMessage();
+                
                 // Switch on the type of message receive
                 switch(cm.getType()) {
                 case ChatMessage.MESSAGE:
@@ -289,6 +296,10 @@ public class Server {
                         ClientThread ct = al.get(i);
                         writeMsg((i+1) + ") " + ct.username + " since " + ct.date);
                     }
+                    break;
+                case ChatMessage.FILE:
+                    allFiles.add(cm.getFile());
+                    broadcast(username + ": " + cm.getFile().getName());
                     break;
                 }
             }

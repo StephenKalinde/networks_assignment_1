@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.filechooser.*;
+import java.io.File;
  
  
 /*
@@ -40,6 +41,8 @@ public class ClientGUI extends JFrame implements ActionListener {
     // the default port number
     private int defaultPort;
     private String defaultHost;
+
+    private File file;
  
     // Constructor connection receiving a socket number
     ClientGUI(String host, int port) {
@@ -160,6 +163,12 @@ public class ClientGUI extends JFrame implements ActionListener {
             return;
         }
 
+        if(o == sendFileBtn)
+        {
+            client.sendMessage(new ChatMessage(3,file));
+            filetextField.setText("");
+        }
+
         if(o== fileSelectBtn)
         {
             JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -169,7 +178,8 @@ public class ClientGUI extends JFrame implements ActionListener {
             if(r == JFileChooser.APPROVE_OPTION)
             {
 
-                filetextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                file =fileChooser.getSelectedFile();
+                filetextField.setText(file.getAbsolutePath());
                 sendFileBtn.setEnabled(true);
 
             }
@@ -222,6 +232,7 @@ public class ClientGUI extends JFrame implements ActionListener {
 
             fileSelectBtn.setEnabled(true);
             filetextField.setEnabled(true);
+            sendFileBtn.setEnabled(true);
 
             connected = true;
              

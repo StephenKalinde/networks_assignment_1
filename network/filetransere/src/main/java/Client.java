@@ -108,6 +108,18 @@ public class Client  {
             display("Exception writing to server: " + e);
         }
     }
+
+    /*
+     * To send file to server
+     */
+     void sendFile(File file){
+         try{
+             socketOutput.writeObject(file);
+         }
+         catch(IOException e){
+             display("Exception writing to server: " + e);
+         }
+     }
     
      /*
      * To send a message to the console or the GUI
