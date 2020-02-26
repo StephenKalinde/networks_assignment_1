@@ -27,7 +27,7 @@ public class ChatMessage implements Serializable {
 
     // LOGOUT to disconnect from the Server
 
-    static final int WHOISIN = 0, MESSAGE = 1, LOGOUT = 2 , FILE = 3;
+    static final int WHOISIN = 0, MESSAGE = 1, LOGOUT = 2 , FILE = 3, ALLFILES=4;
 
     private int type;
 
@@ -50,6 +50,10 @@ public class ChatMessage implements Serializable {
         this.type = type;
 
         this.file = file;
+    }
+    ChatMessage(int type)
+    {
+        this.type= type;
     }
     // getters
 

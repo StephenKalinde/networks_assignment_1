@@ -28,7 +28,7 @@ public class ClientGUI extends JFrame implements ActionListener {
     // to hold the server address an the port number
     private JTextField tfServer, tfPort;
     // to Logout and get the list of the users
-    private JButton login, logout, whoIsIn, fileSelectBtn, sendFileBtn;
+    private JButton login, logout, whoIsIn, fileSelectBtn, sendFileBtn, listFilesBtn;
     // button to select file
     // text field with file path
     private JTextField filetextField;
@@ -79,6 +79,10 @@ public class ClientGUI extends JFrame implements ActionListener {
         fileSelectBtn.addActionListener(this);
         fileSelectBtn.setEnabled(false);
 
+        listFilesBtn = new JButton ("List Files");
+        listFilesBtn.addActionListener(this);
+        listFilesBtn.setEnabled(false);
+
         sendFileBtn = new JButton("Send");
         sendFileBtn.addActionListener(this);
         sendFileBtn.setEnabled(false);
@@ -89,6 +93,8 @@ public class ClientGUI extends JFrame implements ActionListener {
         northPanel.add(fileSelectBtn);
         northPanel.add(filetextField);
         northPanel.add(sendFileBtn);
+        northPanel.add(listFilesBtn);
+
         add(northPanel, BorderLayout.NORTH);
  
         // The CenterPanel which is the chat room
@@ -160,6 +166,7 @@ public class ClientGUI extends JFrame implements ActionListener {
             fileSelectBtn.setEnabled(false);
             filetextField.setEnabled(false);
             sendFileBtn.setEnabled(false);
+            listFilesBtn.setEnabled(false);
             return;
         }
 
@@ -184,6 +191,12 @@ public class ClientGUI extends JFrame implements ActionListener {
 
             }
 
+        }
+
+        if(o == listFilesBtn)
+        {
+            client.sendMessage(new ChatMessage(4));
+            return;
         }
         // if it the who is in button
         if(o == whoIsIn) {
@@ -233,6 +246,7 @@ public class ClientGUI extends JFrame implements ActionListener {
             fileSelectBtn.setEnabled(true);
             filetextField.setEnabled(true);
             sendFileBtn.setEnabled(true);
+            listFilesBtn.setEnabled(true);
 
             connected = true;
              

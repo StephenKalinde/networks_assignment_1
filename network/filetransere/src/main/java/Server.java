@@ -301,6 +301,13 @@ public class Server {
                     allFiles.add(cm.getFile());
                     broadcast(username + ": " + cm.getFile().getName());
                     break;
+
+                case ChatMessage.ALLFILES:
+                    for(int i=0; i<allFiles.size(); i++){
+                        File myFile =allFiles.get(i);
+                        writeMsg(myFile.getName()+"\n");
+                    }   
+                    break; 
                 }
             }
             // remove myself from the arrayList containing the list of the
