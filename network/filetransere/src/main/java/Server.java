@@ -19,7 +19,7 @@ public class Server {
     /**
      * @param args the command line arguments
      */
-    
+
     // a unique ID for each connection
 
     private static int uniqueId;
@@ -51,7 +51,7 @@ public class Server {
     public Server(int port) {
         this(port, null);
     }
-     
+
     public Server(int port, ServerGUI sg) {
         // GUI or not
         this.sg = sg;
@@ -71,13 +71,13 @@ public class Server {
         {
             // the socket used by the server
             ServerSocket serverSocket = new ServerSocket(port);
- 
+
             // infinite loop to wait for connections
             while(keepGoing)
             {
                 // format message saying we are waiting
                 display("Server waiting for Clients on port " + port + ".");
-          
+
                 Socket socket = serverSocket.accept();      // accept connection
                 // if I was asked to stop
                 if(!keepGoing)
@@ -111,7 +111,7 @@ public class Server {
             String msg = sdf.format(new Date()) + " Exception on new ServerSocket: " + e + "\n";
             display(msg);
         }
-    }      
+    }
     /*
 
      * For the GUI to stop the server
@@ -149,7 +149,7 @@ public class Server {
             System.out.print(messageLf);
         else
             sg.appendRoom(messageLf);     // append in the room window
-         
+
         // we loop in reverse order in case we would have to remove a Client
         // because it has disconnected
         for(int i = al.size(); --i >= 0;) {
@@ -209,13 +209,13 @@ public class Server {
             default:
                 System.out.println("Usage is: > java Server [portNumber]");
                 return;
-            
+
         }
         // create a server object and start it
         Server server = new Server(portNumber);
         server.start();
     }
- 
+
     /** One instance of this thread will run for each client */
     class ClientThread extends Thread {
         // the socket where to listen/talk
@@ -259,7 +259,7 @@ public class Server {
             }
             date = new Date().toString() + "\n";
         }
- 
+
         // what will run forever
         public void run() {
             // to loop until LOGOUT
@@ -272,14 +272,14 @@ public class Server {
                 }
                 catch (IOException e) {
                     display(username + " Exception reading Streams: " + e);
-                    break;             
+                    break;
                 }
                 catch(ClassNotFoundException e2) {
                     break;
                 }
                 // the messaage part of the ChatMessage
                 String message = cm.getMessage();
-                
+
                 // Switch on the type of message receive
                 switch(cm.getType()) {
                 case ChatMessage.MESSAGE:
@@ -300,12 +300,23 @@ public class Server {
                 case ChatMessage.FILE:
                     File newFile= cm.getFile();
                     allFiles.add(newFile);
-                    
-                    byte[] bytesArray = new byte[(int) newFile.length];
 
-                    FileInputStream fis = new FileInputStream (newFile);
-                    fis.read(bytesArray);
-                    fis.close();
+                    String filePath= newFile.getAbsolutePath();
+                    int stringLength= filePath.length();
+
+                    String fileExt= filePath.substring(stringLength-3);
+
+                    byte[] bytesArray = new byte[(int) newFile.length()];
+
+                    try{
+                      FileOutputStream fos = new FileOutputStream (newFile.getName());
+                      fos.write(bytesArray);
+                      fos.close();
+                    }
+
+                    catch(IOException e){
+
+                    }
 
                     broadcast(username + ": " + newFile.getName());
                     break;
@@ -314,8 +325,8 @@ public class Server {
                     for(int i=0; i<allFiles.size(); i++){
                         File myFile =allFiles.get(i);
                         writeMsg(myFile.getName()+"\n");
-                    }   
-                    break; 
+                    }
+                    break;
                 }
             }
             // remove myself from the arrayList containing the list of the
@@ -323,7 +334,7 @@ public class Server {
             remove(id);
             close();
         }
-         
+
         // try to close everything
         private void close() {
             // try to close the connection
@@ -340,7 +351,7 @@ public class Server {
             }
             catch (Exception e) {}
       }
- 
+
         /*
          * Write a String to the Client output stream
          */
@@ -374,5 +385,3 @@ public class Server {
     }
 
 }
-    
-
