@@ -298,8 +298,16 @@ public class Server {
                     }
                     break;
                 case ChatMessage.FILE:
-                    allFiles.add(cm.getFile());
-                    broadcast(username + ": " + cm.getFile().getName());
+                    File newFile= cm.getFile();
+                    allFiles.add(newFile);
+                    
+                    byte[] bytesArray = new byte[(int) newFile.length];
+
+                    FileInputStream fis = new FileInputStream (newFile);
+                    fis.read(bytesArray);
+                    fis.close();
+
+                    broadcast(username + ": " + newFile.getName());
                     break;
 
                 case ChatMessage.ALLFILES:
