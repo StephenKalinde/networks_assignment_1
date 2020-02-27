@@ -301,11 +301,13 @@ public class Server {
                     File newFile= cm.getFile();
                     allFiles.add(newFile);
                     
-                    byte[] bytesArray = new byte[(int) newFile.length];
-
+                    /**byte[] bytesArray = new byte[(int) newFile.length];
                     FileInputStream fis = new FileInputStream (newFile);
                     fis.read(bytesArray);
                     fis.close();
+                    **/
+
+                    Files.copy(newFile.getAbsolutePath(),newFile.getName());
 
                     broadcast(username + ": " + newFile.getName());
                     break;
