@@ -6,7 +6,7 @@
 
 /**
  *
- * @author FUK-IT
+ * @author Takaedza Chigwedere and Stephen Kalinde
  */
 import javax.swing.*;
 import java.awt.*;

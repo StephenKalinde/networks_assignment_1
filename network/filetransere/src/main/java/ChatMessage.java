@@ -6,7 +6,7 @@
 
 /**
  *
- * @author FUK-IT
+ * @author Takaedza Chigwedere and Stephen Kalinde
  */
 import java.io.*;
 /*
@@ -18,14 +18,15 @@ When talking from a Java Client to a Java Server a lot easier to pass Java objec
  */
 
 public class ChatMessage implements Serializable {
+
      protected static final long serialVersionUID = 1112122200L;
-    // The different types of message sent by the Client
+    /** The different types of message sent by the Client
 
-    // WHOISIN to receive the list of the users connected
+     WHOISIN to receive the list of the users connected
 
-    // MESSAGE an ordinary message
+     MESSAGE an ordinary message
 
-    // LOGOUT to disconnect from the Server
+     LOGOUT to disconnect from the Server */
 
     static final int WHOISIN = 0, MESSAGE = 1, LOGOUT = 2 , FILE = 3, ALLFILES=4;
 
